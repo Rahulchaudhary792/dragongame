@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+    <head>
+       <meta charset = "UTF-8">
+       <meta name = "Description" content = "MyDescription">
+       <meta name = "Author" content = "Id, Phonenumber">
+       <meta name = "Keywords" content = "HTML, CSS, BOOTSTRAP, JAVASCRIPT TUTORIALS">
+       <meta name = "Viewport" content = "width=device-width, initial-scale=1.0">
+       <title>Dragon Game</title>
+       <style>
+           .game-container {
+              background-image: url('bg.png');
+              background-repeat: no-repeat;
+              background-size: 100vw 100vh;
+              width: 100%;
+              height: 100vh;
+           }
+           .dino {
+              background-image: url('dino.png');
+              background-repeat: no-repeat;
+              background-size: cover;
+              width: 233px;
+              height: 114px;
+              position: absolute;
+              bottom: 0px;
+              left: 150px;
+           }
+           .dragon {
+              background-image: url('dragon.png');
+              background-repeat: no-repeat;
+              background-size: cover;
+              width: 166px;
+              height: 113px;
+              position: absolute;
+              bottom: 0px;
+              right: -300px;
+           }
+           @keyframes ani1 {
+              0% {
+                bottom: 0px;
+              }
+              50% {
+                bottom: 422px;
+              }
+              100% {
+                bottom: 0px;
+              }
+           }
+           .animate1 {
+              animation: ani1 0.6s linear;
+           }
+           @keyframes ani2 {
+              0% {
+                position: absolute;
+                bottom: 0px;
+                right: 1px;
+              }
+              50% {
+                position: absolute;
+                bottom: 0px;
+                right: 825px;
+              }
+              100% {
+                position: absolute;
+                bottom: 0px;
+                right: 100%;
+              }
+           }
+           .animate2 {
+              animation: ani2 1.3s linear infinite;
+           }
+           @keyframes ani3 {
+              0% {
+                position: absolute;
+                bottom: 0px;
+                right: 1px;
+              }
+              50% {
+                position: absolute;
+                bottom: 0px;
+                right: 825px;
+              }
+              100% {
+                position: absolute;
+                bottom: 0px;
+                right: 100%;
+              }
+           }
+           .animate3 {
+              animation: ani3 1s linear infinite;
+           }
+           @keyframes ani4 {
+              0% {
+                position: absolute;
+                bottom: 0px;
+                right: 1px;
+              }
+              50% {
+                position: absolute;
+                bottom: 0px;
+                right: 825px;
+              }
+              100% {
+                position: absolute;
+                bottom: 0px;
+                right: 100%;
+              }
+           }
+           .animate4 {
+              animation: ani4 0.7s linear infinite;
+           }
+           .div1 {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              color: red;
+              font-size: 25px;
+              font-family: Arial;
+              position: relative;
+              bottom: 15px;    
+           }
+           .div2 {
+              color: black;
+              background-color: white;
+              padding: 10px 10px;
+              width: 140px;
+              position: relative;
+              top: 30px;
+              left: 20px;
+              align-content: center;
+              font-family: Arial;
+           }
+           .div3 {
+              color: black;
+              background-color: white;
+              padding: 10px 10px;
+              width: 140px;
+              position: relative;
+              top: 30px;
+              left: 20px;
+              align-content: center;
+              font-family: Arial;
+           }
+           .reset-button {
+              position: absolute;
+              right: 30px;
+              top: 40px;
+              color: black;
+              background-color: white;
+              padding: 7px 30px;
+              border: none;
+           }
+           body {
+              overflow: hidden;
+           }
+       </style>
+    </head>
+    <body class = 'body1'>
+          <div class = "game-container">
+            <div class = "div2">
+               Your Score: 0
+            </div>
+            <div class = "div1">
+               WELCOME TO DRAGON GAME
+            </div>
+            <div class = "dino">
+            </div>
+            <div class = "dragon">
+            </div>
+            <button class = "reset-button js-reset">
+               Reset
+            </button>
+          </div>
+          <script>
+              score = 0;
+              cross = true;
+              drago = new Audio('music.mp3');
+              drago1 = new Audio('gameover.mp3')
+              drago.play();
+              document.querySelector('.body1').addEventListener('keydown', (e) => {
+                  if (e.key == "ArrowUp") {
+                     let dino = document.querySelector('.dino');
+                     dino.classList.add('animate1')
+                     setTimeout(() => {
+                        dino.classList.remove('animate1')
+                     },600)
+                    };
+                  if (e.key == "ArrowLeft") {
+                     dino = document.querySelector('.dino');
+                     dinoX = parseInt(window.getComputedStyle(dino,null).getPropertyValue('left'));
+                     dino.style.left = (dinoX - 112) + 'px';
+                  }
+                  if (e.key == "ArrowRight") {
+                     dino = document.querySelector('.dino');
+                     dinoX = parseInt(window.getComputedStyle(dino,null).getPropertyValue('left'));
+                     dino.style.left = (dinoX + 112) + 'px';
+                  }
+                  console.log(e.key);
+                  })
+                  let dragon = document.querySelector('.dragon');
+                  dragon.classList.add('animate2');
+                  function gamelogic() {
+                     let intervalId;
+                     intervalId = setInterval(() => {
+                     let dino = document.querySelector('.dino');
+                     let dragon = document.querySelector('.dragon');
+                     dx = parseInt(window.getComputedStyle(dino,null).getPropertyValue('left'));
+                     dy = parseInt(window.getComputedStyle(dino,null).getPropertyValue('top'));
+                     ox = parseInt(window.getComputedStyle(dragon,null).getPropertyValue('left'));
+                     oy = parseInt(window.getComputedStyle(dragon,null).getPropertyValue('top'));
+                     offsetX = Math.abs(dx-ox);
+                     offsetY = Math.abs(dy-oy);
+                     if (offsetX < 95 && offsetY < 52) {
+                        clearInterval(intervalId);
+                        let dino = document.querySelector('.dino');
+                        dino.style = 'position: absolute; bottom: -110px;'
+                        let dragon = document.querySelector('.dragon');
+                        dragon.classList.remove('animate2');
+                        dragon.style = 'position: absolute; bottom: 0px; right: 200px;';
+                        let gameOver = document.querySelector('.div1');
+                        gameOver.innerHTML = 'GAME OVER';
+                        drago1.play();
+                        setTimeout(() => {
+                           drago1.pause();
+                        }, 1000);
+                     }
+                     else if(offsetX < 145 && cross) {
+                        cross = false;
+                        score += 1;
+                        updateScore(score);
+                        setTimeout (() => {
+                           cross = true;
+                        }, 1000);
+                     }
+                  },100)
+               }
+               gamelogic();
+                  function updateScore(score) {
+                     score1 = document.querySelector('.div2');
+                     score1.innerHTML = `Your Score: ${score}`;
+                  }
+                  document.querySelector('.js-reset').addEventListener('click', () => {
+                     drago.play();
+                     let dino = document.querySelector('.dino');
+                     dino.style = 'position: absolute; bottom: 0px;'
+                     let dragon = document.querySelector('.dragon');
+                     dragon.classList.add('animate2');
+                     let gameOver = document.querySelector('.div1');
+                     gameOver.innerHTML = 'WELCOME TO DRAGON GAME';
+                     gamelogic();
+                     score = 0;
+                     updateScore(score);
+                  })
+          </script>
+    </body>
+</html>
